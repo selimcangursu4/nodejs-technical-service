@@ -50,3 +50,42 @@ export const fetch = async (req, res) => {
     });
   }
 };
+// Ariza Kategorisini Guncelle
+export const update = async (req, res) => {
+  try {
+    const faultCategoryId = req.params.id;
+    const data = req.body;
+
+    const updatedCategory = await FaultCategory.findByIdAndUpdate(
+      faultCategoryId,
+      {
+        name: data.name,
+        description: data.description,
+        isActive: data.isActive,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (!updatedCategory) {
+      return res.json({
+        success: false,
+        message: "Ariza Kategorisi Bulunamadi!",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Ariza Kategorisi Basariyla Guncellendi!",
+      data: updatedCategory,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Ariza Kategorisi Guncellenemedi!",
+      err: error.message,
+    });
+  }
+};
