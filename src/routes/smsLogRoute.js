@@ -4,7 +4,7 @@ import {
 } from "../controllers/smsContoller";
 const router = express.Router();
 
-// Yeni Sms Ekleme
+// Yeni Sms Gönder Tekil
 router.post("/send-sms", sendSms);
 
 export default router;

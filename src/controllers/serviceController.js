@@ -95,6 +95,41 @@ export const fetch = async (req, res) => {
   }
 };
 // Servis Kaydını Güncelle
+export const update = async (req, res) => {
+  try {
+    let data = req.body;
+    let serviceId = req.params.id;
+
+    await Service.findByIdAndUpdate(serviceId, {
+      customer_fullname: data.customer_fullname,
+      phone: data.phone,
+      alternative_phone: data.alternative_phone,
+      land_phone: data.land_phone,
+      email: data.email,
+      city_id: data.city_id,
+      district_id: data.district_id,
+      address: data.address,
+      product_id: data.product_id,
+      color_id: data.color_id,
+      imei: data.imei,
+      warranty_status: data.warranty_status,
+      warranty_date: data.warranty_date,
+      fault_note: data.fault_note,
+      fault_category_id: data.fault_category_id,
+      ticket: data.ticket,
+    });
+    res.json({
+      success: true,
+      message: "Servis Kayıt Bilgileri Başarıyla Güncellendi!",
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Servis Kayıt Bilgileri Güncellenemedi!",
+      err: error,
+    });
+  }
+};
 // Servis Kayıt Aktivitesi Gir
 // Servis Kaydını Sil
 // Cihazı İşleme Al Durumuna Getir

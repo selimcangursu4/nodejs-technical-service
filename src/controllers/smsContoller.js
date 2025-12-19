@@ -1,5 +1,6 @@
 import SmsLog from "../models/smsLog";
 
+// Tekil Sms Gönderme Fonksiyonu
 export const sendSms = async (phone, message) => {
   try {
     const smsCreate = new SmsLog({
