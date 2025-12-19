@@ -44,7 +44,25 @@ export const store = async (req, res) => {
   }
 };
 // Tüm Kullanıcıları Listele
-
+export const fetch = async (req, res) => {
+  try {
+    let users = await User.find({
+      isActive: true,
+    });
+    res.status(200).json({
+      success: true,
+      message: "Kullanıcılar listelendi",
+      data: users,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Kullanıcılar Listelenemedi Hata !",
+      err: error,
+    });
+    throw error;
+  }
+};
 // Seçili Kullanıcı Detaylarını Getir
 
 // Kullanıcı Bilgilerini Güncelle
