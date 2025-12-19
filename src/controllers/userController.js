@@ -64,7 +64,32 @@ export const fetch = async (req, res) => {
   }
 };
 // Seçili Kullanıcı Detaylarını Getir
+export const edit = async (req, res) => {
+  try {
+    let userId = res.params.id;
 
+    let user = await User.findById(userId);
+
+    if (!user) {
+      res.json({
+        success: false,
+        message: "Kullanıcı Bulunamadı!",
+      });
+    }
+    res.json({
+      success: true,
+      message: "Kullanıcı Bulundu!",
+      data: user,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Kullanıcı Detayları Getirilemedi Hata !",
+      err: error,
+    });
+    throw error;
+  }
+};
 // Kullanıcı Bilgilerini Güncelle
 
 // Kullanıcıyı Sil
