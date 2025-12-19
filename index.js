@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import userController from "./src/controllers/userController"
 import ticketController from "./src/controllers/ticketController"
 import productController from "./src/controllers/productController"
+import faultCategoryController from "./src/controllers/faultCategoryController"
 
 dotenv.config()
 
@@ -12,6 +13,7 @@ app.use(express.json())
 app.use('/user',userController);
 app.use('/ticket',ticketController);
 app.use('/product',productController);
+app.use('/fault-category',faultCategoryController);
 
 
 const PORT = process.env.PORT || 5000
