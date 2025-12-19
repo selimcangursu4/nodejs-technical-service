@@ -1,4 +1,3 @@
-import product from "../models/product";
 import Product from "../models/product";
 // Yeni Ürün Ekle
 export const store = async (req, res) => {
@@ -59,7 +58,32 @@ export const fetch = async (req, res) => {
   }
 };
 // Ürün Detaylarını Getir
+export const edit = async (req, res) => {
+  try {
+    const productId = req.params.brand_id;
 
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      res.json({
+        success: false,
+        message: "Ürün Bulunamadı!",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Ürün Detayları Bulundu",
+      data: product,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Ürün Detayı Getirilemedi!",
+      err: error,
+    });
+  }
+};
 // Ürünü Sil
 
 // Ürün Bilgilerini Güncelle
