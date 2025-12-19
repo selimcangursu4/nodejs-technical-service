@@ -1,4 +1,5 @@
 import Product from "../models/product";
+
 // Yeni Ürün Ekle
 export const store = async (req, res) => {
   try {
@@ -104,3 +105,52 @@ export const remove = async (req, res) => {
   }
 };
 // Ürün Bilgilerini Güncelle
+export const update = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const data = req.body;
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      {
+        name: data.name,
+        sku: data.sku,
+        barcode: data.barcode,
+        category_id: data.category_id,
+        brand_id: data.brand_id,
+        description: data.description,
+        isActive: data.isActive,
+        purchasePrice: data.purchasePrice,
+        salePrice: data.salePrice,
+        stock: data.stock,
+        minStock: data.minStock,
+        warrantyPeriod: data.warrantyPeriod,
+        images: data.images,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (!updatedProduct) {
+      return res.json({
+        success: false,
+        message: "Urun Bulunamadi!",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Urun Bilgileri Basariyla Guncellendi!",
+      data: updatedProduct,
+    });
+
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Urun Bilgileri Guncellenemedi!",
+      err: error.message,
+    });
+  }
+};
