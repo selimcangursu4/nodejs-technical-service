@@ -9,7 +9,7 @@ router.get('/fetch', fetch)
 // Seçili Kullanıcı Detaylarını Getir
 router.get('/edit/:id', edit)
 // Kullanıcı Bilgilerini Güncelle
-
+router.post('/update/:id', edit)
 // Kullanıcıyı Sil
 
 export default router

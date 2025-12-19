@@ -91,5 +91,37 @@ export const edit = async (req, res) => {
   }
 };
 // Kullanıcı Bilgilerini Güncelle
+export const update = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const data = req.body;
 
+    // şifre hashlenir
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+
+    await User.findByIdAndUpdate(userId, {
+      fullname: data.fullname,
+      email: data.email,
+      password: hashedPassword,
+      role: data.role,
+      isActive: data.isActive,
+      phone: data.phone,
+      businessPhone: data.businessPhone,
+      birthday: data.birthday,
+      gender: data.gender,
+    });
+
+    res.json({
+      success: true,
+      message: "Kullanıcı Bilgileri Güncellendi!",
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Kullanıcı Bilgileri Güncellenemedi Hata !",
+      err: error,
+    });
+    throw error;
+  }
+};
 // Kullanıcıyı Sil
