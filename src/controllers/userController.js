@@ -125,3 +125,28 @@ export const update = async (req, res) => {
   }
 };
 // Kullanıcıyı Sil
+export const remove = async (req, res) => {
+  try {
+    let userId = req.params.id;
+
+    const removeUser = await User.findByIdAndDelete(userId);
+
+    if (!removeUser) {
+      res.json({
+        success: true,
+        message: "Kullanıcı Bulunamadı!",
+      });
+    }
+    res.json({
+      success: true,
+      message: "Kullanıcı Başarıyla Silindi !",
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Kullanıcı Silinemedi Hata!",
+      err: error,
+    });
+    throw error;
+  }
+};

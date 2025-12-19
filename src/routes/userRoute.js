@@ -1,5 +1,5 @@
 import express from 'express'
-import { store,fetch,edit } from '../controllers/userController.js'
+import { store,fetch,edit,remove } from '../controllers/userController.js'
 const router = express.Router()
 
 // Yeni kullanıcı ekleme
@@ -11,5 +11,5 @@ router.get('/edit/:id', edit)
 // Kullanıcı Bilgilerini Güncelle
 router.post('/update/:id', edit)
 // Kullanıcıyı Sil
-
+router.delete('/delete/:id', remove)
 export default router
