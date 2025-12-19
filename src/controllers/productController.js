@@ -1,3 +1,4 @@
+import product from "../models/product";
 import Product from "../models/product";
 // Yeni Ürün Ekle
 export const store = async (req, res) => {
@@ -33,9 +34,30 @@ export const store = async (req, res) => {
     });
   }
 };
-
 // Ürünleri Listele
+export const fetch = async (req, res) => {
+  try {
+    let products = await Product.find();
 
+    if (!products) {
+      res.json({
+        success: false,
+        message: "Ürünler Tablosundan Ürünler Bulunamadı!",
+      });
+    }
+    res.json({
+      success: true,
+      message: "Ürünler Listelendi!",
+      data: products,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Ürünler Listelenemedi!",
+      err: error,
+    });
+  }
+};
 // Ürün Detaylarını Getir
 
 // Ürünü Sil
