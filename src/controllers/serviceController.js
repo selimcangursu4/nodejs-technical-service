@@ -1,5 +1,5 @@
-import Service from '../models/service';
-import { sendSms } from './smsController';
+import Service from "../models/service";
+import { sendSms } from "./smsController";
 
 // Yeni Servis Kaydı Ekle
 export const store = async (req, res) => {
@@ -24,7 +24,7 @@ export const store = async (req, res) => {
       fault_category_id: data.fault_category_id,
       priority: data.priority,
       ticket: data.ticket,
-      user_id: null, 
+      user_id: null,
       service_status_id: 1, // Servise Alındı
     });
 
@@ -35,13 +35,12 @@ export const store = async (req, res) => {
       const message = `Merhaba ${createService.customer_fullname}, ürününüz servise alınmıştır. Servis numaranız: ${createService._id}`;
       sendSms(createService.phone, message);
     }
-    
+
     res.json({
       success: true,
       message: "Servis kaydı başarıyla oluşturuldu",
       data: createService,
     });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -51,3 +50,41 @@ export const store = async (req, res) => {
     });
   }
 };
+// Servis Kayıt Detayı
+export const edit = async (req, res) => {
+  try {
+    let serviceId = req.params.id;
+
+    let service = await Service.findById(serviceId);
+
+    if (!service) {
+      res.json({
+        success: false,
+        message: "Servis Kaydı Bulunamadı!",
+      });
+    }
+    res.json({
+      success: true,
+      message: "Servis Kaydı Bulundu!",
+      data: service,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Servis Kaydı Bulunamadı Hata!",
+      err: error,
+    });
+  }
+};
+// Tüm Servis Kayıtlarını Listele
+// Servis Kaydını Güncelle
+// Servis Kayıt Aktivitesi Gir
+// Servis Kaydını Sil
+// Cihazı İşleme Al Durumuna Getir
+// Cihazı Kontrole Al Durumuna Getir
+// Cihazı Kontrol Edildi Durumuna Getir
+// Cihazı Teslim Edildi Durumuna Getir
+// Cihaza Ödeme Bekliyor Durumuna Getir
+// Cihazı Ödeme İptal Edildi Durumuna Getir
+// Cihazı Ödeme Tamamlandı Durumuna Getir
+// Cihazı Yedek Parça Bekliyor Durumuna Getir
