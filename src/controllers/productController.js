@@ -85,5 +85,22 @@ export const edit = async (req, res) => {
   }
 };
 // Ürünü Sil
+export const remove = async (req, res) => {
+  try {
+    let productId = req.params.brand_id;
 
+    await Product.findByIdAndDelete(productId);
+
+    res.json({
+      success: false,
+      message: "Ürün Başarıyla Silindi",
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Ürün Silinemedi Hata !",
+      err: error,
+    });
+  }
+};
 // Ürün Bilgilerini Güncelle
