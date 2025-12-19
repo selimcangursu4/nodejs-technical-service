@@ -1,13 +1,15 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-import userController from "./src/controllers"
+import userController from "./src/controllers/userController"
+import ticketController from "./src/controllers/ticketController"
+
 dotenv.config()
 
 const app = express()
 app.use(express.json())
 app.use('/user',userController);
-
+app.use('/ticket',ticketController);
 
 const PORT = process.env.PORT || 5000
 const MONGO_URI = process.env.MONGODB_URI
