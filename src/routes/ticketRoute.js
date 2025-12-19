@@ -4,6 +4,6 @@ const router = express.Router()
 
 // Yeni Etiket Ekleme
 router.post('/store', store)
-
+router.get('/fetch', fetch);
 
 export default router
