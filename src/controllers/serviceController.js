@@ -77,6 +77,23 @@ export const edit = async (req, res) => {
   }
 };
 // Tüm Servis Kayıtlarını Listele
+export const fetch = async (req, res) => {
+  try {
+    let services = await Service.find();
+
+    res.json({
+      success: true,
+      message: "TÜm Servis Kayıtları Getirildi!",
+      data: services,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Servis Kayıtları Getirilemedi Hata!",
+      err: error,
+    });
+  }
+};
 // Servis Kaydını Güncelle
 // Servis Kayıt Aktivitesi Gir
 // Servis Kaydını Sil
