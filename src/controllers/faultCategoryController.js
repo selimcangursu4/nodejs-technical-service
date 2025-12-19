@@ -89,3 +89,30 @@ export const update = async (req, res) => {
     });
   }
 };
+// Ariza Kategorisini Sil
+export const remove = async (req, res) => {
+  try {
+    const faultCategoryId = req.params.id;
+
+    const deletedCategory = await FaultCategory.findByIdAndDelete(faultCategoryId);
+
+    if (!deletedCategory) {
+      return res.json({
+        success: false,
+        message: "Ariza Kategorisi Bulunamadi!",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Ariza Kategorisi Basariyla Silindi!",
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Ariza Kategorisi Silinemedi!",
+      err: error.message,
+    });
+  }
+};
+
