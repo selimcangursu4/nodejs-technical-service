@@ -25,3 +25,28 @@ export const store = async (req, res) => {
     });
   }
 };
+// Tüm Arıza Kategorilerini Listele
+export const fetch = async (req, res) => {
+  try {
+    const faultCategories = await FaultCategory.find();
+
+    if (!faultCategories) {
+      res.json({
+        success: false,
+        message: "Arıza Kategorileri Bulunamadı!",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Arıza Kategorileri Listelendi",
+      data: faultCategories,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Arıza Kategorileri Listelenemedi Hata!",
+      err: error,
+    });
+  }
+};
