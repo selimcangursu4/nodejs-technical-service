@@ -165,7 +165,21 @@ export const createActivities = async (req, res) => {
 // Servis Kaydını Sil
 export const remove = async (req, res) => {
   try {
-  } catch (error) {}
+    let serviceId = req.params.id;
+
+    await Service.findByIdAndDelete(serviceId);
+
+    res.json({
+      success: true,
+      message: "Servis Kaydı Başarıyla Silindi!",
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Servis Kaydı Silinemedi!",
+      err: error,
+    });
+  }
 };
 // Cihazı İşleme Al Durumuna Getir - Durum 2
 // Cihazı Kontrole Al Durumuna Getir - Durum 3

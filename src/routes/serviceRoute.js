@@ -21,4 +21,6 @@ router.post("/update/:id", update);
 router.delete("/delete/:id", remove);
 // Servis Kayıt Aktivitesi Gir
 router.post("create-activities/:id", createActivities);
+
+
 export default router;
