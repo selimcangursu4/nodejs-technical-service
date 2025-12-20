@@ -6,6 +6,7 @@ import {
   update,
   remove,
   createActivities,
+  processDevice
 } from "../controllers/serviceController";
 const router = express.Router();
 
@@ -21,6 +22,7 @@ router.post("/update/:id", update);
 router.delete("/delete/:id", remove);
 // Servis Kayıt Aktivitesi Gir
 router.post("create-activities/:id", createActivities);
-
+// Cihazı İşleme Al 
+router.post("process-activities/:id", processDevice);
 
 export default router;

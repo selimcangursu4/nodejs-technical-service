@@ -182,6 +182,36 @@ export const remove = async (req, res) => {
   }
 };
 // Cihazı İşleme Al Durumuna Getir - Durum 2
+export const processDevice = async (req, res) => {
+  try {
+    let serviceId = req.params.id;
+    let data = req.body;
+
+    // Servis Kaydında Durumu Güncelle
+    await Service.findByIdAndUpdate(serviceId, {
+      service_status_id: 2, // Test amaçlı 2 eklendi objectId ile dinamikleştirelecek!
+    });
+    // Servis Aktivitiesine Ekle
+    let newStatusActivity = new ServiceActivities({
+      service_id: serviceId,
+      note: "Cihaz İşleme Alındı!",
+      user_id: 1,
+      status_id: 2, // Test amaçlı 2 eklendi objectId ile dinamikleştirelecek!
+    });
+    await newStatusActivity.save();
+
+    res.json({
+      success: true,
+      message: "Cihaz İşleme Alındı!",
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Cihaz İşleme Alınamadı Hata!",
+      err: error,
+    });
+  }
+};
 // Cihazı Kontrole Al Durumuna Getir - Durum 3
 // Cihazı Kontrol Edildi Durumuna Getir - Durum 4
 // Cihazı Teslim Edildi Durumuna Getir - Durum 5
