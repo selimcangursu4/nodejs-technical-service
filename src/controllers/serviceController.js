@@ -213,6 +213,36 @@ export const processDevice = async (req, res) => {
   }
 };
 // Cihazı Kontrole Al Durumuna Getir - Durum 3
+export const startDeviceInspection = async(req,res)=>{
+   try {
+    let serviceId = req.params.id;
+    let data = req.body;
+
+    // Servis Kaydında Durumu Güncelle
+    await Service.findByIdAndUpdate(serviceId, {
+      service_status_id: 3, // Test amaçlı 3 eklendi objectId ile dinamikleştirelecek!
+    });
+    // Servis Aktivitiesine Ekle
+    let newStatusActivity = new ServiceActivities({
+      service_id: serviceId,
+      note: "Cihaz Kontrole Alındı!",
+      user_id: 1,
+      status_id: 3, // Test amaçlı 3 eklendi objectId ile dinamikleştirelecek!
+    });
+    await newStatusActivity.save();
+
+    res.json({
+      success: true,
+      message: "Cihaz Kontrole Alındı!",
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Cihaz Kontrole Alınamadı Hata!",
+      err: error,
+    });
+  } 
+}
 // Cihazı Kontrol Edildi Durumuna Getir - Durum 4
 // Cihazı Teslim Edildi Durumuna Getir - Durum 5
 // Cihaza Ödeme Bekliyor Durumuna Getir - Durum 6

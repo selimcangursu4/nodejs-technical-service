@@ -24,5 +24,7 @@ router.delete("/delete/:id", remove);
 router.post("create-activities/:id", createActivities);
 // Cihazı İşleme Al 
 router.post("process-activities/:id", processDevice);
+// Cihaz Kontorle Alındı 
+router.post("start-inspection-activities/:id", processDevice);
 
 export default router;
