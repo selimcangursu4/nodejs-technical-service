@@ -6,13 +6,14 @@ import {
   remove,
 } from "../controllers/ticketController.js";
 const router = express.Router();
+import { verifyToken } from "../middlewares/authMiddleware.js";
 
 // Yeni Etiket Ekleme
-router.post("/store", store);
+router.post("/store", verifyToken, store);
 // Tüm Etiketleri Listele
-router.get("/fetch", fetch);
+router.get("/fetch", verifyToken, fetch);
 // Etiketi Sil
-router.delete("/delete/:id", remove);
+router.delete("/delete/:id", verifyToken, remove);
 // Etiket Aktiflik Durumunu Güncelle
-router.post("/active-update", activeUpdate);
+router.post("/active-update", verifyToken, activeUpdate);
 export default router;

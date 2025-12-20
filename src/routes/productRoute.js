@@ -4,19 +4,21 @@ import {
   fetch,
   edit,
   remove,
-  update
+  update,
 } from "../controllers/productController.js";
+import { verifyToken } from "../middlewares/authMiddleware.js";
+
 const router = express.Router();
 
 // Yeni Ürün Ekleme
-router.post("/store", store);
+router.post("/store", verifyToken, store);
 // Tüm Ürünleri Listele
-router.post("/fetch", fetch);
+router.post("/fetch", verifyToken, fetch);
 // Ürün Detaylarını Getir
-router.get("/edit/:id", edit);
+router.get("/edit/:id", verifyToken, edit);
 // Ürün Sil
-router.delete("/remove/:id", remove);
+router.delete("/remove/:id", verifyToken, remove);
 // Ürün Bilgileri Güncelle
-router.post("/update/:id", update);
+router.post("/update/:id", verifyToken, update);
 
 export default router;
