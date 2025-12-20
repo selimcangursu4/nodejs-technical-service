@@ -212,40 +212,134 @@ export const processDevice = async (req, res) => {
     });
   }
 };
-// Cihazı Kontrole Al Durumuna Getir - Durum 3
-export const startDeviceInspection = async(req,res)=>{
-   try {
+// Cihazi Kontrol Edildi Durumuna Getir - Durum 4
+export const completeDeviceInspection = async (req, res) => {
+  try {
     let serviceId = req.params.id;
-    let data = req.body;
 
-    // Servis Kaydında Durumu Güncelle
     await Service.findByIdAndUpdate(serviceId, {
-      service_status_id: 3, // Test amaçlı 3 eklendi objectId ile dinamikleştirelecek!
+      service_status_id: 4,
     });
-    // Servis Aktivitiesine Ekle
-    let newStatusActivity = new ServiceActivities({
-      service_id: serviceId,
-      note: "Cihaz Kontrole Alındı!",
-      user_id: 1,
-      status_id: 3, // Test amaçlı 3 eklendi objectId ile dinamikleştirelecek!
-    });
-    await newStatusActivity.save();
 
-    res.json({
-      success: true,
-      message: "Cihaz Kontrole Alındı!",
-    });
+    await new ServiceActivities({
+      service_id: serviceId,
+      note: "Cihaz Kontrol Edildi!",
+      user_id: 1,
+      status_id: 4,
+    }).save();
+
+    res.json({ success: true, message: "Cihaz Kontrol Edildi!" });
   } catch (error) {
-    res.json({
-      success: false,
-      message: "Cihaz Kontrole Alınamadı Hata!",
-      err: error,
+    res.json({ success: false, message: "Islem Basarisiz!", err: error });
+  }
+};
+
+// Cihazi Teslim Edildi Durumuna Getir - Durum 5
+export const deliverDevice = async (req, res) => {
+  try {
+    let serviceId = req.params.id;
+
+    await Service.findByIdAndUpdate(serviceId, {
+      service_status_id: 5,
     });
-  } 
-}
-// Cihazı Kontrol Edildi Durumuna Getir - Durum 4
-// Cihazı Teslim Edildi Durumuna Getir - Durum 5
-// Cihaza Ödeme Bekliyor Durumuna Getir - Durum 6
-// Cihazı Ödeme İptal Edildi Durumuna Getir - Durum 7
-// Cihazı Ödeme Tamamlandı Durumuna Getir - Durum 8
-// Cihazı Yedek Parça Bekliyor Durumuna Getir - Durum 9
+
+    await new ServiceActivities({
+      service_id: serviceId,
+      note: "Cihaz Teslim Edildi!",
+      user_id: 1,
+      status_id: 5,
+    }).save();
+
+    res.json({ success: true, message: "Cihaz Teslim Edildi!" });
+  } catch (error) {
+    res.json({ success: false, message: "Islem Basarisiz!", err: error });
+  }
+};
+
+// Cihazi Odeme Bekliyor Durumuna Getir - Durum 6
+export const setPaymentPending = async (req, res) => {
+  try {
+    let serviceId = req.params.id;
+
+    await Service.findByIdAndUpdate(serviceId, {
+      service_status_id: 6,
+    });
+
+    await new ServiceActivities({
+      service_id: serviceId,
+      note: "Odeme Bekleniyor!",
+      user_id: 1,
+      status_id: 6,
+    }).save();
+
+    res.json({ success: true, message: "Odeme Bekleniyor!" });
+  } catch (error) {
+    res.json({ success: false, message: "Islem Basarisiz!", err: error });
+  }
+};
+
+// Cihazi Odeme Iptal Edildi Durumuna Getir - Durum 7
+export const cancelPayment = async (req, res) => {
+  try {
+    let serviceId = req.params.id;
+
+    await Service.findByIdAndUpdate(serviceId, {
+      service_status_id: 7,
+    });
+
+    await new ServiceActivities({
+      service_id: serviceId,
+      note: "Odeme Iptal Edildi!",
+      user_id: 1,
+      status_id: 7,
+    }).save();
+
+    res.json({ success: true, message: "Odeme Iptal Edildi!" });
+  } catch (error) {
+    res.json({ success: false, message: "Islem Basarisiz!", err: error });
+  }
+};
+
+// Cihazi Odeme Tamamlandi Durumuna Getir - Durum 8
+export const completePayment = async (req, res) => {
+  try {
+    let serviceId = req.params.id;
+
+    await Service.findByIdAndUpdate(serviceId, {
+      service_status_id: 8,
+    });
+
+    await new ServiceActivities({
+      service_id: serviceId,
+      note: "Odeme Tamamlandi!",
+      user_id: 1,
+      status_id: 8,
+    }).save();
+
+    res.json({ success: true, message: "Odeme Tamamlandi!" });
+  } catch (error) {
+    res.json({ success: false, message: "Islem Basarisiz!", err: error });
+  }
+};
+
+// Cihazi Yedek Parca Bekliyor Durumuna Getir - Durum 9
+export const setWaitingForSparePart = async (req, res) => {
+  try {
+    let serviceId = req.params.id;
+
+    await Service.findByIdAndUpdate(serviceId, {
+      service_status_id: 9,
+    });
+
+    await new ServiceActivities({
+      service_id: serviceId,
+      note: "Yedek Parca Bekleniyor!",
+      user_id: 1,
+      status_id: 9,
+    }).save();
+
+    res.json({ success: true, message: "Yedek Parca Bekleniyor!" });
+  } catch (error) {
+    res.json({ success: false, message: "Islem Basarisiz!", err: error });
+  }
+};
