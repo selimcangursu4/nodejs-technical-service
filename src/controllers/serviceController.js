@@ -1,4 +1,6 @@
 import Service from "../models/service";
+import ServiceActivities from "../models/serviceActivities";
+
 import { sendSms } from "./smsController";
 
 // Yeni Servis Kaydı Ekle
@@ -131,12 +133,45 @@ export const update = async (req, res) => {
   }
 };
 // Servis Kayıt Aktivitesi Gir
+export const createActivities = async (req, res) => {
+  try {
+    let serviceId = req.params.id;
+    let data = req.body;
+
+    // Yeni Servis Aktivitesi Oluştur
+    let newActivities = new ServiceActivities({
+      service_id: serviceId,
+      note: data.note,
+      user_id: 1,
+      status_id: data.status_id,
+    });
+    await newActivities.save();
+    // Servis Kayıt Durumunu Güncelle
+    let newServiceStatus = await Service.findByIdAndUpdate(serviceId, {
+      service_status_id: data.status_id,
+    });
+    res.json({
+      success: true,
+      message: "Servis Aktivitesi Başarıyla Oluşturuldu!",
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Servis Aktivitesi Oluşturulamadı!",
+      err: error,
+    });
+  }
+};
 // Servis Kaydını Sil
-// Cihazı İşleme Al Durumuna Getir
-// Cihazı Kontrole Al Durumuna Getir
-// Cihazı Kontrol Edildi Durumuna Getir
-// Cihazı Teslim Edildi Durumuna Getir
-// Cihaza Ödeme Bekliyor Durumuna Getir
-// Cihazı Ödeme İptal Edildi Durumuna Getir
-// Cihazı Ödeme Tamamlandı Durumuna Getir
-// Cihazı Yedek Parça Bekliyor Durumuna Getir
+export const remove = async (req, res) => {
+  try {
+  } catch (error) {}
+};
+// Cihazı İşleme Al Durumuna Getir - Durum 2
+// Cihazı Kontrole Al Durumuna Getir - Durum 3
+// Cihazı Kontrol Edildi Durumuna Getir - Durum 4
+// Cihazı Teslim Edildi Durumuna Getir - Durum 5
+// Cihaza Ödeme Bekliyor Durumuna Getir - Durum 6
+// Cihazı Ödeme İptal Edildi Durumuna Getir - Durum 7
+// Cihazı Ödeme Tamamlandı Durumuna Getir - Durum 8
+// Cihazı Yedek Parça Bekliyor Durumuna Getir - Durum 9
